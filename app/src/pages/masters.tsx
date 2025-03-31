@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
 import RANKINGS from "./api/rankings";
 import SELECTIONS from "./api/selections";
+import logo from "../../public/Bulge.png";
+import Image from "next/image";
+import Accordion from "react-bootstrap/Accordion";
+import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 
 export default function NewPage() {
 
@@ -55,27 +59,73 @@ export default function NewPage() {
     return score;
   }
 
+  function sortTiers(data: any) {
+    return data.sort((a:any,  b:any) => playerMap.get(a).total_to_par - playerMap.get(b).total_to_par);
+  }
+
+  useEffect(() => {
+    if (playerMap) {
+      RANKINGS.T1 = sortTiers(RANKINGS.T1);
+      RANKINGS.T2 = sortTiers(RANKINGS.T2);
+      RANKINGS.T3 = sortTiers(RANKINGS.T3);
+    }
+  }, [playerMap]);
+
   if (loading) return <p>Loading...</p>;
 
   return (
-    <div>
-      <div className="header">Masters of the Bulge</div>
-      <ul>
-        { 
-          leaderboard?.map((item: any, index: number) => {
-          return <li key={index}>{item.position}. {item.first_name} {item.last_name} {item.total_to_par}</li>;
-        })
-        }
-      </ul>
-      
-      <div>
-        { 
-            SELECTIONS.map((item: any, index: number) => {
-              return <div key={index}>{item.name}: {totalScore(item.selections)}</div>;
-            }
-          )
-        }
-      </div>
+    <div className="main">
+      <Image
+        src={logo}
+        alt="logo"
+        width={200}
+        height={200}
+        priority
+      />
+
+      {/* <div className="score-card">
+        <div className="table-header">Perfect Team</div>
+      </div> */}
+
+      <Accordion defaultActiveKey="0">
+      <Accordion.Item eventKey="0">
+        <Accordion.Header>
+          <div className="total-score">{playerMap.get(sortTiers(RANKINGS.T1)[0]).total_to_par
+              + playerMap.get(sortTiers(RANKINGS.T2)[0]).total_to_par
+              + playerMap.get(sortTiers(RANKINGS.T3)[0]).total_to_par}
+          </div>
+          <div>Perfect Team</div>
+        </Accordion.Header>
+        <Accordion.Body>
+        <table className="scoreboard">
+          <tr className="perfect-team-header">
+          </tr>
+          <tr className="player-score">
+            <td>T1</td>
+            <td>{sortTiers(RANKINGS.T1)[0]}</td>
+            <td>{playerMap.get(sortTiers(RANKINGS.T1)[0]).total_to_par}</td>
+          </tr>
+          <tr className="player-score">
+            <td>T2</td>
+            <td>{sortTiers(RANKINGS.T2)[0]}</td>
+            <td>{playerMap.get(sortTiers(RANKINGS.T2)[0]).total_to_par}</td>
+          </tr>
+          <tr className="player-score">
+            <td>T3</td>
+            <td>{sortTiers(RANKINGS.T3)[0]}</td>
+            <td>{playerMap.get(sortTiers(RANKINGS.T3)[0]).total_to_par}</td>
+          </tr>
+        </table>
+        </Accordion.Body>
+      </Accordion.Item>
+      </Accordion>
+
+
+      {/* <div>
+        {SELECTIONS.map((item: any, index: number) => {
+          return <div key={index}>{item.name}: {totalScore(item.selections)}</div>;
+        })}
+      </div> */}
     </div>
   );
 }

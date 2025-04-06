@@ -70,8 +70,12 @@ a {
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
-.accordion {
-  margin: 15px;
+.content {
+  max-width: 500px;
+  align-items: center;
+  margin: auto;
+  padding: 0 15px;
+  border-bottom: none;
 }
 
 .accordion-button {
@@ -85,7 +89,7 @@ a {
 
 .accordion-item {
   border-top: solid 2px var(--masters-green) !important;
-  border-bottom: solid 2px var(--masters-green) !important;
+  /* border-bottom: solid 2px var(--masters-green) !important; */
   border-left: none !important; border-right: none !important;
   border-radius: 0 !important;
 }
@@ -118,6 +122,8 @@ td, th {
 .total-score {
   color: white;
   background-color: var(--masters-green);
-  padding: 4px;
+  padding: 5px;
   margin-right: 10px;
+  min-width: 40px;
+  text-align: center;
 }

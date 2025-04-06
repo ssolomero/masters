@@ -32,9 +32,10 @@ export default function NewPage() {
         const json = await response.json();
         setData(json);
         setLeaderboard(json.results.leaderboard);
+        console.log(json.results.leaderboard);
         setPlayerMap(createMap(json.results.leaderboard));
       } catch (e) {
-        setError(e);
+        // setError(e);
       } finally {
         setLoading(false);
       }
@@ -118,14 +119,16 @@ export default function NewPage() {
         </table>
         </Accordion.Body>
       </Accordion.Item>
-      </Accordion>
-
-
-      {/* <div>
         {SELECTIONS.map((item: any, index: number) => {
-          return <div key={index}>{item.name}: {totalScore(item.selections)}</div>;
+          return (
+            <Accordion.Item eventKey="{index + 1}" key={index}
+            >
+              <Accordion.Header>{item.name}</Accordion.Header>
+              <Accordion.Body>{totalScore(item.selections)}</Accordion.Body>
+            </Accordion.Item>
+        );
         })}
-      </div> */}
+      </Accordion>
     </div>
   );
 }

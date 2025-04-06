@@ -155,8 +155,6 @@ export default function Home() {
         })}
         
         </Accordion>
-
-        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdOtc1KZHydaCZuBICnzazcXNFpq7zEkyIdW8WjYMqLHwm43A/viewform?embedded=true" width="400" height="6022" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
       </div>
     </>
   );

@@ -3,6 +3,7 @@
   --foreground: #076652;
   --masters-green: #076652;
   --masters-yellow: #ffdf00;
+  --masters-red: #de0f3f
 }
 
 @media (prefers-color-scheme: dark) {
@@ -78,6 +79,24 @@ a {
   border-bottom: none;
 }
 
+.description {
+  font-size: medium;
+  text-align: left;
+  margin: 0 5px;
+}
+
+.text-red {
+  color: var(--masters-red);
+}
+
+.text-green {
+  color: var(--masters-green);
+}
+
+.accordion-header {
+  outline: none !important;
+}
+
 .accordion-button {
   background-color: var(--background) !important;
   color: var(--masters-green) !important;
@@ -85,6 +104,11 @@ a {
   text-align: center;
   font-weight: bold;
   border-color: var(--masters-green) !important;
+  outline: none !important;
+}
+
+.accordion-button:focus {
+  outline: none;
 }
 
 .accordion-item {

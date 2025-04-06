@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
-import logo from "../../public/Bulge.png";
+import logo from "../../public/Bulge (1).svg";
 import { useEffect, useState } from "react";
 import RANKINGS from "./api/rankings";
 import Accordion from "react-bootstrap/Accordion";
@@ -92,9 +92,10 @@ export default function Home() {
         <Image
           src={logo}
           alt="logo"
-          width={175}
-          height={175}
+          width={200}
+          height={200}
           priority
+          className="mt-4"
         />
       <Accordion defaultActiveKey="0" className="content">
         <Accordion.Item eventKey="0">
@@ -154,6 +155,8 @@ export default function Home() {
         })}
         
         </Accordion>
+
+        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdOtc1KZHydaCZuBICnzazcXNFpq7zEkyIdW8WjYMqLHwm43A/viewform?embedded=true" width="400" height="6022" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
       </div>
     </>
   );

@@ -1,22 +1,8 @@
-import logo from "../../public/Bulge (1).svg";
+import logo from "../../public/Bulge.svg";
 import Image from "next/image";
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
-import { useEffect, useState } from "react";
 
 export default function Registration() {
-
-  const [pageHeight, setPageHeight] = useState(0);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setPageHeight(window.document.body.offsetHeight);
-    };
-
-    handleResize(); // Initial calculation
-    window.addEventListener('resize', handleResize);
-
-    return () => window.removeEventListener('resize', handleResize); // Cleanup
-  }, []);
 
   return (
     <div className="main">
@@ -25,7 +11,6 @@ export default function Registration() {
         alt="logo"
         width={200}
         height={200}
-        priority
         className="mt-4"
       />
 

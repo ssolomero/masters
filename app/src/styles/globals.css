@@ -23,9 +23,6 @@ body {
 body {
   color: var(--foreground);
   background-color: var(--background);
-  font-family: "Pochaevsk", serif;
-  font-weight: 400;
-  font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -36,10 +33,10 @@ body {
   margin: 0;
 }
 
-a {
+/* a {
   color: inherit;
   text-decoration: none;
-}
+} */
 
 @media (prefers-color-scheme: dark) {
   html {
@@ -57,8 +54,6 @@ a {
 .header {
   font-size: xx-large;
   font-weight: 800;
-  font-family: "Pochaevsk", serif;
-  font-style: normal;
   text-align: center;
   margin: 1em;
 }
@@ -108,7 +103,8 @@ a {
 }
 
 .accordion-button:focus {
-  outline: none;
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 .accordion-item {
@@ -150,4 +146,13 @@ td, th {
   margin-right: 10px;
   min-width: 40px;
   text-align: center;
+}
+
+.default-btn {
+  background-color: #076652;
+  padding: 10px;
+  width: 150px;
+  border-radius: 10px;
+  color: var(--masters-yellow);
+  box-shadow: none;
 }

@@ -60,11 +60,16 @@ export default function Home() {
   }
 
   function sortTiers(data: string[]) {
-    return data.sort((a,  b) => playerMap.get(a)?.total - playerMap.get(b)?.total);
+    return data.sort((a,  b) => normalizeScoreTotal(playerMap.get(a)?.total) - normalizeScoreTotal(playerMap.get(b)?.total));
   }
 
   function sortPool(data: Selection[]) {
     return data.sort((a, b) => totalScore(a.selections) - totalScore(b.selections))
+  }
+
+  function normalizeScoreTotal(total: string) {
+    if (total === 'E') return 0;
+    else return parseInt(total) ??  0;
   }
 
   function getTier(data: number) {

@@ -16,7 +16,7 @@ export default function Home() {
   const [playerMap, setPlayerMap] = useState(new Map());
 
   useEffect(() => {
-    const url = 'https://live-golf-data.p.rapidapi.com/leaderboard?orgId=1&tournId=014&year=2024';
+    const url = 'https://live-golf-data.p.rapidapi.com/leaderboard?orgId=1&tournId=014&year=2025';
     const options = {
 	    method: 'GET',
 	    headers: {

@@ -9,7 +9,7 @@ const SELECTIONS = [
   },
   {
     "name": "Raul II",
-    "selections": ["Rory McIlroy", "Collin Morikawa",	"Min Woo Lee",	"Keegan Bradley",	"Sungjae Im",	"Max Homa", "Matt McCarthy"]
+    "selections": ["Rory McIlroy", "Collin Morikawa",	"Min Woo Lee",	"Keegan Bradley",	"Sungjae Im",	"Max Homa", "Matt McCarty"]
   },
   {
     "name": "Earlvin",
@@ -17,7 +17,7 @@ const SELECTIONS = [
   },
   {
     "name": "Janiel",
-    "selections": ["Rory McIlroy",	"Collin Morikawa", "Shane Lowry",	"Sepp Straka", "Justin Rose",	"Nicolai Hojgaard",	"Charl Schwartzel"]
+    "selections": ["Rory McIlroy",	"Collin Morikawa", "Shane Lowry",	"Sepp Straka", "Justin Rose",	"Nicolai Højgaard",	"Charl Schwartzel"]
   },
   {
     "name": "Marissa",
@@ -45,7 +45,7 @@ const SELECTIONS = [
   },
   {
     "name": "Michael",
-    "selections": ["Rory McIlroy",	"Ludvig Aberg",	"Akshay Bhatia",	"Corey Conners",	"Lucas Glover",	"Nick Taylor", "Danny Willett"]
+    "selections": ["Rory McIlroy",	"Ludvig Åberg",	"Akshay Bhatia",	"Corey Conners",	"Lucas Glover",	"Nick Taylor", "Danny Willett"]
   }
   
 ];

@@ -156,3 +156,15 @@ td, th {
   color: var(--masters-yellow);
   box-shadow: none;
 }
+
+.tier-cell {
+  width: 45px;
+}
+
+.name-cell {
+  width: 300px;
+}
+
+.score-cell {
+  width: 45px;
+}

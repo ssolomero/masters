@@ -11,7 +11,7 @@ const RANKINGS = {
     "Bryson DeChambeau",
     "Justin Thomas",
     "Jordan Spieth",
-    "Joaquin Niemann",
+    "Joaquín Niemann",
     "Hideki Matsuyama",
     "Brooks Koepka"
   ],

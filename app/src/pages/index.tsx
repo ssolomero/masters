@@ -3,35 +3,42 @@ import Image from "next/image";
 import logo from "../../public/Bulge.svg";
 import loadingLogo from "../../public/Bulge.gif"
 import { useEffect, useState } from "react";
-import RANKINGS from "./api/rankings";
 import Accordion from "react-bootstrap/Accordion";
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
-import SELECTIONS from "./api/selections";
-import { Player, Selection } from "@/typings/types";
+import { Player, Rankings, Teams } from "@/typings/types";
 
 
 export default function Home() {
 
+  const scoresUrl = 'https://live-golf-data.p.rapidapi.com/leaderboard?orgId=1&tournId=014&year=2025';
+  const scoresOptions = {
+	  method: 'GET',
+	  headers: {
+	    'x-rapidapi-key': '244f220674msh41be0771b7485eap152c23jsnad1ac3e6b553',
+	    'x-rapidapi-host': 'live-golf-data.p.rapidapi.com'
+	  }
+  };
+
   const [loading, setLoading] = useState(true);
   const [playerMap, setPlayerMap] = useState(new Map());
+  const [teams, setTeams] = useState({} as Teams[]);
+  const [rankings, setRankings] = useState(null as unknown as Rankings);
 
   useEffect(() => {
-    const url = 'https://live-golf-data.p.rapidapi.com/leaderboard?orgId=1&tournId=014&year=2025';
-    const options = {
-	    method: 'GET',
-	    headers: {
-		    'x-rapidapi-key': '244f220674msh41be0771b7485eap152c23jsnad1ac3e6b553',
-		    'x-rapidapi-host': 'live-golf-data.p.rapidapi.com'
-	    }
-    };
     const fetchData = async () => {
       try {
-        const response = await fetch(url, options);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const json = await response.json();
-        setPlayerMap(createMap(json.leaderboardRows));
+        const [scoresResponse, teamsResponse, rankingsResponse] = 
+          await Promise.all([
+            fetch(scoresUrl, scoresOptions), 
+            fetch('/api/teams'),
+            fetch('/api/rankings')
+          ]);
+        const scoresData = await scoresResponse.json();
+        const {data: teamsData} = await teamsResponse.json();
+        const {data: rankingsData} = await rankingsResponse.json();
+        setTeams(teamsData);
+        setRankings(rankingsData[0]);
+        setPlayerMap(createMap(scoresData.leaderboardRows));
       } catch (e) {
         console.log(e)
       } finally {
@@ -62,9 +69,9 @@ export default function Home() {
   function sortTiers(data: string[]) {
     return data.sort((a,  b) => normalizeScoreTotal(playerMap.get(a)?.total) - normalizeScoreTotal(playerMap.get(b)?.total));
   }
-
-  function sortPool(data: Selection[]) {
-    return data.sort((a, b) => totalScore(a.selections) - totalScore(b.selections))
+ 
+  function sortPool(data: Teams[]) {
+    return data.sort((a, b) => totalScore(a.players) - totalScore(b.players))
   }
 
   function normalizeScoreTotal(total: string) {
@@ -72,26 +79,17 @@ export default function Home() {
     else return parseInt(total) ??  0;
   }
 
-  function getTier(data: number) {
-    if (data === 3) return '3a';
-    if (data === 4) return '3b';
-    if (data === 5) return '4a';
-    if (data === 6) return '4b';
-    if (data === 7) return '5';
-    return data;
-  }
-
   useEffect(() => {
-    if (playerMap) {
-      RANKINGS.T1 = sortTiers(RANKINGS.T1);
-      RANKINGS.T2 = sortTiers(RANKINGS.T2);
-      RANKINGS.T3a = sortTiers(RANKINGS.T3a);
-      RANKINGS.T3b = sortTiers(RANKINGS.T3b);
-      RANKINGS.T4a = sortTiers(RANKINGS.T4a);
-      RANKINGS.T4b = sortTiers(RANKINGS.T4b);
-      RANKINGS.T5 = sortTiers(RANKINGS.T5);
+    if (playerMap && rankings) {
+      rankings.T1 = sortTiers(rankings.T1);
+      rankings.T2 = sortTiers(rankings.T2);
+      rankings.T3 = sortTiers(rankings.T3);
+      rankings.T4 = sortTiers(rankings.T4);
+      rankings.T5 = sortTiers(rankings.T5);
+      rankings.T6 = sortTiers(rankings.T6);
+      rankings.T7 = sortTiers(rankings.T7);
     }
-  }, [playerMap]);
+  }, [playerMap, rankings]);
 
   if (loading) return (
     <div className="main">
@@ -138,13 +136,13 @@ export default function Home() {
         <Accordion.Item eventKey="0">
           <Accordion.Header>
             <div className="total-score">{totalScore([
-              sortTiers(RANKINGS.T1)[0],
-              sortTiers(RANKINGS.T2)[0],
-              sortTiers(RANKINGS.T3a)[0],
-              sortTiers(RANKINGS.T3b)[0],
-              sortTiers(RANKINGS.T4a)[0],
-              sortTiers(RANKINGS.T4b)[0],
-              sortTiers(RANKINGS.T5)[0]
+              sortTiers(rankings.T1)[0],
+              sortTiers(rankings.T2)[0],
+              sortTiers(rankings.T3)[0],
+              sortTiers(rankings.T4)[0],
+              sortTiers(rankings.T5)[0],
+              sortTiers(rankings.T6)[0],
+              sortTiers(rankings.T7)[0]
             ])}
             </div>
             <div>Perfect Team</div>
@@ -156,59 +154,59 @@ export default function Home() {
             <tbody>
             <tr className="player-score">
               <td>T1</td>
-              <td>{sortTiers(RANKINGS.T1)[0]}</td>
-              <td>{playerMap.get(sortTiers(RANKINGS.T1)[0])?.total ?? 0}</td>
+              <td>{sortTiers(rankings.T1)[0]}</td>
+              <td>{playerMap.get(sortTiers(rankings.T1)[0])?.total ?? 0}</td>
             </tr>
             <tr className="player-score">
               <td>T2</td>
-              <td>{sortTiers(RANKINGS.T2)[0]}</td>
-              <td>{playerMap.get(sortTiers(RANKINGS.T2)[0])?.total ?? 0}</td>
+              <td>{sortTiers(rankings.T2)[0]}</td>
+              <td>{playerMap.get(sortTiers(rankings.T2)[0])?.total ?? 0}</td>
             </tr>
             <tr className="player-score">
               <td>T3a</td>
-              <td>{sortTiers(RANKINGS.T3a)[0]}</td>
-              <td>{playerMap.get(sortTiers(RANKINGS.T3a)[0])?.total ?? 0}</td>
+              <td>{sortTiers(rankings.T3)[0]}</td>
+              <td>{playerMap.get(sortTiers(rankings.T3)[0])?.total ?? 0}</td>
             </tr>
             <tr className="player-score">
               <td>T3b</td>
-              <td>{sortTiers(RANKINGS.T3b)[0]}</td>
-              <td>{playerMap.get(sortTiers(RANKINGS.T3b)[0])?.total ?? 0}</td>
+              <td>{sortTiers(rankings.T4)[0]}</td>
+              <td>{playerMap.get(sortTiers(rankings.T4)[0])?.total ?? 0}</td>
             </tr>
             <tr className="player-score">
               <td>T4a</td>
-              <td>{sortTiers(RANKINGS.T4a)[0]}</td>
-              <td>{playerMap.get(sortTiers(RANKINGS.T4a)[0])?.total ?? 0}</td>
+              <td>{sortTiers(rankings.T5)[0]}</td>
+              <td>{playerMap.get(sortTiers(rankings.T5)[0])?.total ?? 0}</td>
             </tr>
             <tr className="player-score">
               <td>T4b</td>
-              <td>{sortTiers(RANKINGS.T4b)[0]}</td>
-              <td>{playerMap.get(sortTiers(RANKINGS.T4b)[0])?.total ?? 0}</td>
+              <td>{sortTiers(rankings.T6)[0]}</td>
+              <td>{playerMap.get(sortTiers(rankings.T6)[0])?.total ?? 0}</td>
             </tr>
             <tr className="player-score">
               <td>T5</td>
-              <td>{sortTiers(RANKINGS.T5)[0]}</td>
-              <td>{playerMap.get(sortTiers(RANKINGS.T5)[0])?.total ?? 0}</td>
+              <td>{sortTiers(rankings.T7)[0]}</td>
+              <td>{playerMap.get(sortTiers(rankings.T7)[0])?.total ?? 0}</td>
             </tr>
             </tbody>
           </table>
           </Accordion.Body>
         </Accordion.Item>
-        {sortPool(SELECTIONS).map((item, index) => {
+        {sortPool(teams).map((item, index) => {
             return (
               <Accordion.Item eventKey={index + 1 + ""} key={index}
               >
                 <Accordion.Header>
-                  <div className="total-score">{totalScore(item.selections)}</div>
-                  <div>{item.name}</div>
+                  <div className="total-score">{totalScore(item.players)}</div>
+                  <div>{item.owner}</div>
                 </Accordion.Header>
                 <Accordion.Body>
-                  {item.selections.map((player, index) => {
+                  {item.players.map((player, index) => {
                     return (
                       <table className="scoreboard" key={player}>
                         <thead className="perfect-team-header"></thead>
                         <tbody>
                           <tr className="player-score">
-                            <td className="tier-cell">T{getTier(index+1)}</td>
+                            <td className="tier-cell">T{index+1}</td>
                             <td className="name-cell">{player}</td>
                             <td className="score-cell">{playerMap.get(player)?.total ?? 0}</td>
                           </tr>

@@ -14,7 +14,7 @@ async function init() {
     rankings = db.collection('rankings');
     teams = db.collection('teams');
   } catch (error) {
-    throw new Error('Failed to connect to db');
+    console.error('Failed to connect to the database:', error);
   }
 }
 
@@ -24,6 +24,7 @@ export async function getRankings() {
     const result = await rankings.find({}).limit(20).toArray();
     return {rankings: result}
   } catch (error) {
+    console.error('Failed to fetch rankings:', error);
     return { error: 'Failed to fetch rankings'}
   }
 }
@@ -34,6 +35,7 @@ export async function getTeams() {
     const result = await teams.find({}).limit(20).toArray();
     return {teams: result}
   } catch (error) {
+    console.log('Failed to fetch teams:', error);
     return { error: 'Failed to fetch rankings'}
   }
 }

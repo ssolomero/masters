@@ -1,10 +1,8 @@
-import { getRankings, getTeams } from '@lib/config/collections';
+import { getTeams } from '@lib/config/collections';
 import Team from '@lib/config/models/team.model';
-import { connectDB, getCollection } from '@lib/config/db';
-import { NextResponse } from 'next/server';
+import { NextApiRequest, NextApiResponse } from 'next';
 
-
-const handler = async (req:any, res:any) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   // await connectDB();
 
   if (req.method === 'GET') {

@@ -89,7 +89,7 @@ export default function Home() {
       rankings.T6 = sortTiers(rankings.T6);
       rankings.T7 = sortTiers(rankings.T7);
     }
-  }, [playerMap, rankings]);
+  }, [playerMap, rankings])
 
   if (loading) return (
     <div className="main">
@@ -163,27 +163,27 @@ export default function Home() {
               <td>{playerMap.get(sortTiers(rankings.T2)[0])?.total ?? 0}</td>
             </tr>
             <tr className="player-score">
-              <td>T3a</td>
+              <td>T3</td>
               <td>{sortTiers(rankings.T3)[0]}</td>
               <td>{playerMap.get(sortTiers(rankings.T3)[0])?.total ?? 0}</td>
             </tr>
             <tr className="player-score">
-              <td>T3b</td>
+              <td>T4</td>
               <td>{sortTiers(rankings.T4)[0]}</td>
               <td>{playerMap.get(sortTiers(rankings.T4)[0])?.total ?? 0}</td>
             </tr>
             <tr className="player-score">
-              <td>T4a</td>
+              <td>T5</td>
               <td>{sortTiers(rankings.T5)[0]}</td>
               <td>{playerMap.get(sortTiers(rankings.T5)[0])?.total ?? 0}</td>
             </tr>
             <tr className="player-score">
-              <td>T4b</td>
+              <td>T6</td>
               <td>{sortTiers(rankings.T6)[0]}</td>
               <td>{playerMap.get(sortTiers(rankings.T6)[0])?.total ?? 0}</td>
             </tr>
             <tr className="player-score">
-              <td>T5</td>
+              <td>T7</td>
               <td>{sortTiers(rankings.T7)[0]}</td>
               <td>{playerMap.get(sortTiers(rankings.T7)[0])?.total ?? 0}</td>
             </tr>

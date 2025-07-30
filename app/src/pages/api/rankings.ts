@@ -1,6 +1,7 @@
 import { getRankings } from '@lib/config/collections';
+import { NextApiRequest, NextApiResponse } from 'next';
 
-const handler = async (req:any, res:any) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'GET') {
     try {
       const { rankings, error } = await getRankings();

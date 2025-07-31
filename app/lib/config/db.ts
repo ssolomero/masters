@@ -4,12 +4,10 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 if (!process.env.NEXT_PUBLIC_MONGODB_URI) {
-  console.log(process.env);
   throw new Error("Please define the MONGODB_URI environment variable inside .env.local");
 }
 
 const URI = process.env.NEXT_PUBLIC_MONGODB_URI;
-console.log(process.env);
 
 const client = new MongoClient(URI, {
   serverApi: {

@@ -1,9 +1,9 @@
 import { getTeams } from '@lib/config/collections';
+import { connectDB } from '@lib/config/db';
 import Team from '@lib/config/models/team.model';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  // await connectDB();
 
   if (req.method === 'GET') {
     try {
@@ -17,6 +17,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (req.method === 'POST') {
     try {
+      await connectDB()
       const team = req.body;
       const newTeam = new Team(team);
       await newTeam.save();

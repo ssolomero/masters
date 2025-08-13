@@ -1,5 +1,6 @@
 import { MongoClient, ServerApiVersion } from "mongodb";
 import dotenv from 'dotenv';
+import mongoose from "mongoose";
 
 dotenv.config();
 
@@ -32,6 +33,16 @@ if(process.env.NODE_ENV !== 'production') {
   clientPromise = global._mongoClientPromise;
 } else {
   clientPromise = client.connect();
+}
+
+export const connectDB = async () => {
+  try {
+    const connect = await mongoose.connect(URI);
+    console.log(`MongoDB Connected: ${connect.connection.host}`);
+  } catch (error) {
+    console.error(error);
+    process.exit(1);
+  }
 }
 
 export default clientPromise;

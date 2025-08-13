@@ -148,15 +148,6 @@ td, th {
   text-align: center;
 }
 
-.default-btn {
-  background-color: #076652;
-  padding: 10px;
-  width: 150px;
-  border-radius: 10px;
-  color: var(--masters-yellow);
-  box-shadow: none;
-}
-
 .tier-cell {
   width: 45px;
 }
@@ -167,4 +158,72 @@ td, th {
 
 .score-cell {
   width: 45px;
+}
+
+.tier-label {
+  border-bottom: var(--masters-green) solid 2px;
+  color: var(--masters-green);
+  font-weight: bold;;
+}
+
+.registration-text {
+  font-size: medium;
+  font-weight: bold;
+}
+
+input[type="radio"] {
+  margin-right: 10px;
+  accent-color: var(--masters-green);
+}
+
+input[type="radio"]:checked + span {
+  font-weight: bold;
+  color: var(--masters-red)
+}
+
+input[type="radio"]::before {
+  accent-color: floralwhite;
+  background-color: floralwhite;
+  color: floralwhite;
+}
+
+input[type="text"] {
+  background-color: floralwhite;
+  border: none;
+  border-bottom: var(--masters-green) solid 2px;
+  color: var(--masters-red);
+  font-size: large;
+  font-weight: bold;
+  margin-bottom: 100px;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.btn-primary {
+  background-color: var(--masters-green);
+  color: var(--masters-yellow);
+  padding: 10px;
+  font-weight: bold;
+  border: none;
+}
+
+/* .btn-primary:focus{
+  background-color: var(--masters-yellow);
+} */
+
+.btn-primary:disabled {
+  opacity: 0.5;
+}
+
+.btn-link {
+  background-color: transparent;
+  color: var(--masters-green);
+  border: none
+}
+
+.link {
+  color: var(--masters-green);
 }

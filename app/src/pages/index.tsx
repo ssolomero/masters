@@ -1,11 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 import logo from "../../public/Bulge.svg";
-import loadingLogo from "../../public/Bulge.gif"
-import { useEffect, useState } from "react";
-import Accordion from "react-bootstrap/Accordion";
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
-import { Player, Rankings, Teams } from "@/typings/types";
 import Link from "next/link";
 
 

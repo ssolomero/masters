@@ -3,10 +3,11 @@ import Image from "next/image";
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { Rankings } from "@/typings/types";
 
 export default function Registration() {
 
-  const [rankings, setRankings] = useState({} as any);
+  const [rankings, setRankings] = useState({} as Rankings);
   const [owner, setOwner] = useState("");
   const [team, setTeam] = useState(['N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A']);
   const [currentStep, setCurrentStep] = useState(0);
@@ -105,7 +106,7 @@ export default function Registration() {
                   <label htmlFor="" className="text-center">{key}</label>
                 </div>
                 {value.map((item: string, id: number) => (
-                  <div className="mb-2 text-start">
+                  <div className="mb-2 text-start" key={id}>
                     <label key={id}>
                       <input type="radio" name={item} value={item} checked={item === team[index]} onChange={(e) => onTierSelection(index, e.target.value)} />
                       <span>{item}</span>

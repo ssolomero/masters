@@ -16,7 +16,13 @@ export default function Registration() {
   useEffect(() => {
     const fetchRankings = async () => {
       try {
-        const response = await fetch('/api/rankings');
+        const requestOptions = {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json' // Specify content type as JSON
+          }
+        }
+        const response = await fetch('/api/rankings', requestOptions);
         const {data: data} = await response.json();
         delete data[0]._id; // Remove _id if it exists
         setRankings(data[0]);

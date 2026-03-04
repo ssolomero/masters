@@ -1,15 +1,18 @@
 :root {
   --background: FloralWhite;
-  --foreground: #076652;
+  --foreground: var(--bulge-blue);
+  --secondary:var(--bulge-orange);
   --masters-green: #076652;
   --masters-yellow: #ffdf00;
-  --masters-red: #de0f3f
+  --masters-red: #de0f3f;
+  --bulge-blue: #5170ff;
+  --bulge-orange: #ff914d;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background:FloralWhite;
-    --foreground: #076652;
+    --foreground: var(--bulge-blue);
   }
 }
 
@@ -81,11 +84,11 @@ body {
 }
 
 .text-red {
-  color: var(--masters-red);
+  color: var(--secondary);
 }
 
 .text-green {
-  color: var(--masters-green);
+  color: var(--foreground);
 }
 
 .accordion-header {
@@ -94,11 +97,11 @@ body {
 
 .accordion-button {
   background-color: var(--background) !important;
-  color: var(--masters-green) !important;
+  color: var(--foreground) !important;
   padding: 5px;
   text-align: center;
   font-weight: bold;
-  border-color: var(--masters-green) !important;
+  border-color: var(--foreground) !important;
   outline: none !important;
 }
 
@@ -141,7 +144,7 @@ td, th {
 
 .total-score {
   color: white;
-  background-color: var(--masters-green);
+  background-color: var(--foreground);
   padding: 5px;
   margin-right: 10px;
   min-width: 40px;
@@ -161,8 +164,8 @@ td, th {
 }
 
 .tier-label {
-  border-bottom: var(--masters-green) solid 2px;
-  color: var(--masters-green);
+  border-bottom: var(--foreground) solid 2px;
+  color: var(--foreground);
   font-weight: bold;;
 }
 
@@ -171,14 +174,18 @@ td, th {
   font-weight: bold;
 }
 
+.player-score-eliminated {
+  color: var(--secondary);
+}
+
 input[type="radio"] {
   margin-right: 10px;
-  accent-color: var(--masters-green);
+  accent-color: var(--foreground);
 }
 
 input[type="radio"]:checked + span {
   font-weight: bold;
-  color: var(--masters-red)
+  color: var(--secondary);
 }
 
 input[type="radio"]::before {
@@ -190,8 +197,8 @@ input[type="radio"]::before {
 input[type="text"] {
   background-color: floralwhite;
   border: none;
-  border-bottom: var(--masters-green) solid 2px;
-  color: var(--masters-red);
+  border-bottom: var(--foreground) solid 2px;
+  color: var(--secondary);
   font-size: large;
   font-weight: bold;
   margin-bottom: 100px;
@@ -203,8 +210,8 @@ input[type="text"]:focus {
 }
 
 .btn-primary {
-  background-color: var(--masters-green);
-  color: var(--masters-yellow);
+  background-color: var(--foreground);
+  color: var(--secondary);
   padding: 10px;
   font-weight: bold;
   border: none;
@@ -220,10 +227,23 @@ input[type="text"]:focus {
 
 .btn-link {
   background-color: transparent;
-  color: var(--masters-green);
+  color: var(--foreground);
   border: none
 }
 
 .link {
-  color: var(--masters-green);
+  color: var(--foreground);
+}
+
+.footer-content { 
+  color: var(--foreground);
+  text-align: center;
+}
+
+footer {
+  background-color: var(--background);
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  padding: 100px 0 50px 0
 }

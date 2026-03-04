@@ -4,6 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Rankings } from "@/typings/types";
+import Button from "@mui/material/Button";
+import Logo from "@/components/logo";
 
 export default function Registration() {
 
@@ -12,22 +14,20 @@ export default function Registration() {
   const [team, setTeam] = useState(['N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A']);
   const [currentStep, setCurrentStep] = useState(0);
   const [registerLoading, setRegisterLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [playersLoading, setPlayersLoading] = useState(true);
 
   useEffect(() => {
     const fetchRankings = async () => {
       try {
-        const requestOptions = {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json' // Specify content type as JSON
-          }
-        }
-        const response = await fetch('/api/rankings', requestOptions);
+        const response = await fetch('/api/rankings');
         const {data: data} = await response.json();
         delete data[0]._id; // Remove _id if it exists
         setRankings(data[0]);
       } catch (error) {
         console.error('Error fetching rankings:', error);
+      } finally {
+        setPlayersLoading(false);
       }
     };
     fetchRankings();
@@ -82,27 +82,21 @@ export default function Registration() {
 
   return (
     <div className="main">
-      <Link href="/">
-        <Image
-          src={logo}
-          alt="logo"
-          width={200}
-          height={200}
-          priority
-          className="mt-4"
-        />
-      </Link>
+      <Logo />
 
       {/* Form */}
       <form className="content mt-5 pb-5">
       {currentStep === 0 && (
         <div>
           <input type="text" value={owner} placeholder="Enter your name" className="w-100 mb-5 text-center" onChange={(e) => setOwner(e.target.value)} required/>
-          <button type="submit" onClick={handleNext} className="btn-primary w-100 mt-5" disabled={!owner}>Continue</button>
+          <Button variant="contained" onClick={handleNext} className="btn-primary w-100" disabled={!owner}><strong>CONTINUE</strong></Button>
         </div>
       )}
 
-      {currentStep === 1 && (
+      {currentStep === 1 && playersLoading && (
+        <div className="text-center mt-5">Loading players...</div>)}
+
+      {currentStep === 1 && !playersLoading &&(
         <div>
           <div className="mb-5 text-center registration-text">Select your players below (1 per tier)</div>
           {Object.entries(rankings).map(([key, value], index) => (
@@ -122,12 +116,18 @@ export default function Registration() {
               </div>
             )
         ))}
-          <div className="mt-5">
-            <button type="submit" onClick={handleSubmit} className="btn-primary w-100 mb-4" disabled={team.includes('N/A')}
+          <div className="my-5">
+            <Button 
+              variant="contained"
+              className="w-100 mb-4"
+              onClick={handleSubmit}
+              loading={registerLoading}
+              loadingIndicator="Register..."
+              disabled={team.includes('N/A')}
             >
-              {registerLoading ? 'Register...' : 'Register'}
-            </button>
-            <button type="submit" onClick={handlePrevious} className="btn-link">Change name</button>
+                <strong>Register</strong>
+            </Button>
+            <Button variant="text" onClick={handlePrevious}>Change name</Button>
           </div>
         </div>
       )}

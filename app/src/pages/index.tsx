@@ -1,8 +1,11 @@
 import Head from "next/head";
 import Image from "next/image";
-import logo from "../../public/Bulge.svg";
+import logo from "../../public/bulge-bl-or.svg";
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import Link from "next/link";
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+import Logo from "@/components/logo";
 
 
 export default function Home() {
@@ -19,31 +22,22 @@ export default function Home() {
         <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet" />
       </Head>
       <div className="main">
-        <Link href="/">
-          <Image
-            src={logo}
-            alt="logo"
-            width={200}
-            height={200}
-            priority
-            className="mt-4"
-          />
-        </Link>
+       <Logo />
         <div className="content">
-          <div className="mx-auto mt-5">
+          <Stack spacing={3} direction="column" className="mt-5">
             <Link href="/registration"
             >
-              <button className="btn-primary w-100 mb-4"><strong>Register</strong></button>
+              <Button variant="contained" className="w-100"><strong>Register</strong></Button>
             </Link>
             <Link href="/live-score"
             >
-              <button className="btn-primary w-100 mb-4"><strong>Live Score</strong></button>
+              <Button variant="contained" className="w-100"><strong>Live Score</strong></Button>
             </Link>
             <Link href="/rules"
             >
-              <button className="btn-primary w-100 mb-4"><strong>Rules</strong></button>
+              <Button variant="contained" className="w-100"><strong>Rules</strong></Button>
             </Link>
-          </div>
+          </Stack>
         </div>
       </div>
     </>

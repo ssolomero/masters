@@ -4,9 +4,13 @@ export interface Player {
   total: string
 }
 
-export interface Teams {
+export interface TeamsResponse {
   owner: string,
   players: string[]
+}
+export interface Teams {
+	owner: string,
+	players: {tier: string, name: string}[]
 }
 
 export interface Rankings { 

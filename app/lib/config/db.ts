@@ -9,6 +9,8 @@ if (!process.env.MONGODB_URI) {
 
 const URI = process.env.MONGODB_URI;
 
+console.log(URI);
+
 const client = new MongoClient(URI, {
   serverApi: {
     version: ServerApiVersion.v1,

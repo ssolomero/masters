@@ -49,8 +49,7 @@ body {
 
 .main {
   /* display: flex; */
-  align-self: center;
-  text-align: center;
+  /* align-self: center; */
   background-color: var(--background);
 }
 
@@ -111,7 +110,7 @@ body {
 }
 
 .accordion-item {
-  border-top: solid 2px var(--masters-green) !important;
+  border-top: solid 2px var(--foreground) !important;
   /* border-bottom: solid 2px var(--masters-green) !important; */
   border-left: none !important; border-right: none !important;
   border-radius: 0 !important;
@@ -127,7 +126,7 @@ body {
 
 .scoreboard {
   background-color: var(--background);
-  color: var(--masters-green);
+  color: var(--foreground);
   border-color: black;
   border-width: 2em;
   border-collapse: collapse;
@@ -238,12 +237,11 @@ input[type="text"]:focus {
 .footer-content { 
   color: var(--foreground);
   text-align: center;
+  font-size: 0.9rem;
 }
 
 footer {
   background-color: var(--background);
-  position: sticky;
-  bottom: 0;
-  width: 100%;
-  padding: 100px 0 50px 0
+  padding: 50px;
+  margin: auto;
 }

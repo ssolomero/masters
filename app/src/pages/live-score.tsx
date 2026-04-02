@@ -6,6 +6,9 @@ import Accordion from "react-bootstrap/Accordion";
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import { Player, Rankings, Teams, TeamsResponse } from "@/typings/types";
 import Logo from "@/components/logo";
+import Badge from '@mui/material/Badge';
+import Box from "@mui/material/Box";
+import HelpDialog from "../components/help-dialog";
 
 
 export default function Home() {
@@ -65,6 +68,7 @@ export default function Home() {
       const player = playerMap.get(el.name);
       if (player?.total === 'E') score += 0;
       else score += player ? parseInt(player.total) : 0;
+      if (player?.status === 'cut') score += 10;
     }
     return score;
   }
@@ -92,8 +96,13 @@ export default function Home() {
     else return parseInt(total) ??  0;
   }
 
+  function getAggregateScore(player: any) {
+    if (player?.status === 'cut') return (normalizeScoreTotal(player?.total) + 10);
+    return normalizeScoreTotal(player?.total);
+  }
+
   function sortTeamPlayers(teamObject: {tier: string, name: string}[]) {
-    return teamObject.sort((a, b) => normalizeScoreTotal(playerMap.get(a.name)?.total) - normalizeScoreTotal(playerMap.get(b.name)?.total));
+    return teamObject.sort((a, b) => getAggregateScore(playerMap.get(a.name)) - getAggregateScore(playerMap.get(b.name)));
   }
 
   function createTeamsObject(teams: TeamsResponse[]) {
@@ -104,6 +113,7 @@ export default function Home() {
     console.log(teamsMap);
     return teamsMap;
   }
+
 
   useEffect(() => {
     if (playerMap && rankings) {
@@ -118,7 +128,7 @@ export default function Home() {
   }, [playerMap, rankings])
 
   if (loading) return (
-    <div className="main">
+    <div className="main text-center">
       <Image
         src={loadingLogo}
         alt="logo"
@@ -132,7 +142,8 @@ export default function Home() {
   
   return (
     <div className="main">
-      <Logo />
+      {!loading && <Box sx={{ textAlign: "center" }}><Logo /></Box>}
+      <HelpDialog />
       <Accordion defaultActiveKey="0" className="content pt-5">
         <Accordion.Item eventKey="0">
         <Accordion.Header>
@@ -176,6 +187,7 @@ export default function Home() {
               </Accordion.Header>
               <Accordion.Body>
                 {sortTeamPlayers(team.players).map((player, index) => {
+                  const playerData = playerMap.get(player.name);
                   return (
                     <table className="scoreboard" key={player.name}>
                       <thead className="perfect-team-header"></thead>
@@ -183,7 +195,20 @@ export default function Home() {
                         <tr className={index === 5 || index === 6 ? "player-score-eliminated" : "player-score"}>
                           <td className="tier-cell">{player.tier}</td>
                           <td className="name-cell">{player.name}</td>
-                          <td className="score-cell">{playerMap.get(player.name)?.total ?? 0}</td>
+                          <td className="score-cell">
+                            {playerData?.status === 'cut' ?
+                              (<Badge 
+                                  badgeContent={"+10"}
+                                  color="primary"
+                                >
+                                <Box sx={{padding: 0.5}}>{playerMap.get(player.name)?.total ?? 0}</Box>
+                              </Badge>) : (
+                              <Box>
+                                {playerMap.get(player.name)?.total ?? 0}
+                              </Box>
+                              )
+                            }
+                          </td>
                         </tr>
                       </tbody>
                 </table>

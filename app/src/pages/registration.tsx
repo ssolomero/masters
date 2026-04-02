@@ -6,6 +6,14 @@ import Link from "next/link";
 import { Rankings } from "@/typings/types";
 import Button from "@mui/material/Button";
 import Logo from "@/components/logo";
+import Typography from "@mui/material/Typography"
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle"
+import Box from "@mui/material/Box";
+import HelpDialog from "../components/help-dialog";
+import Dialog from "@mui/material/Dialog";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close"
 
 export default function Registration() {
 
@@ -54,15 +62,16 @@ export default function Registration() {
 
       if (response.ok) {
         console.log('Post created successfully!');
-        
+        setCurrentStep(2); // Move to confirmation step
       } else {
         console.log(`Error: ${data.message || 'Something went wrong'}`);
+        setError(true);
       }
     } catch (error) {
       console.error('Error making POST request:', error);
+      setError(true);
     } finally {
       setRegisterLoading(false);
-      setCurrentStep(2); // Move to confirmation step
     }
   };
   
@@ -80,10 +89,22 @@ export default function Registration() {
     setCurrentStep(currentStep - 1);
   };
 
-  return (
-    <div className="main">
-      <Logo />
+  const handleRandomSelection = () => {
+    const randomTeam = Object.entries(rankings).map(([_, value]) => {
+      if (Array.isArray(value) && value.length > 0) {
+        const randomIndex = Math.floor(Math.random() * value.length);
+        return value[randomIndex];
+      }
+      return 'N/A';
+    });
+  
+    setTeam(randomTeam);
+  };
 
+  return (
+    <Box className="main">
+      <Box sx={{ textAlign: "center" }}><Logo /></Box>
+      <HelpDialog />
       {/* Form */}
       <form className="content mt-5 pb-5">
       {currentStep === 0 && (
@@ -98,12 +119,19 @@ export default function Registration() {
 
       {currentStep === 1 && !playersLoading &&(
         <div>
-          <div className="mb-5 text-center registration-text">Select your players below (1 per tier)</div>
+          <div className="mb-3 text-center registration-text">Select your players below (1 per tier)</div>
+          <Button 
+            variant="outlined"
+            className="w-100 mb-3"
+            onClick={handleRandomSelection}
+          >
+          🎲 Pick for me
+          </Button>
           {Object.entries(rankings).map(([key, value], index) => (
             Array.isArray(value) && (
-              <div key={key} className="mb-4">
+              <div key={key} className="mb-4 text-center">
                 <div className="tier-label mb-4">
-                  <label htmlFor="" className="text-center">{key}</label>
+                  <label htmlFor="">{`Tier ${index + 1}`}</label>
                 </div>
                 {value.map((item: string, id: number) => (
                   <div className="mb-2 text-start" key={id}>
@@ -116,30 +144,55 @@ export default function Registration() {
               </div>
             )
         ))}
-          <div className="my-5">
-            <Button 
+          <Box className="my-5 text-center">
+            <Button
+              fullWidth 
               variant="contained"
               className="w-100 mb-4"
               onClick={handleSubmit}
               loading={registerLoading}
-              loadingIndicator="Register..."
+              loadingPosition="end"
               disabled={team.includes('N/A')}
             >
                 <strong>Register</strong>
             </Button>
             <Button variant="text" onClick={handlePrevious}>Change name</Button>
-          </div>
+          </Box>
         </div>
       )}
 
       {currentStep === 2 && (
-        <div>
-          <div className="mb-4">Welcome to the Bulge Open!</div>
-          <Link href="/" className="link">Go home</Link>
-        </div>
+        <>
+          <Alert severity="success" sx={{ backgroundColor: "primary", mb: 3 }}>
+            <AlertTitle>Success</AlertTitle>
+            Welcome to the Bulge Open!
+          </Alert>
+          <Typography fontWeight="bold" className="mb-2">Next Steps:</Typography>
+          <Typography variant="body1" textAlign="left" className="mb-3">
+            💸  Venmo $15 to @sharence-solomero
+          </Typography>
+          <Typography variant="body1" textAlign="left" className="mb-3">
+            ⛳️  Check back here to get live updates
+          </Typography>
+          <Typography variant="body1" textAlign="left" className="mb-3">
+            👕  Buy exclusive Bulge
+          </Typography>
+        </>
       )}
 
       </form>
-    </div>
+      <Dialog open={error} >
+          <IconButton
+            aria-label="close"
+            onClick={() => setError(false)}
+            sx={{ position: 'absolute', right: 8, top: 8 }}
+          >
+            <CloseIcon />
+          </IconButton>
+        <Alert severity="error">
+          <AlertTitle>Sorry! Something went wrong, please try again.</AlertTitle>
+        </Alert>
+      </Dialog>
+    </Box>
   );
 }

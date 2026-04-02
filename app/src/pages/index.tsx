@@ -6,6 +6,8 @@ import Link from "next/link";
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Logo from "@/components/logo";
+import Box from "@mui/material/Box";
+import HelpDialog from "../components/help-dialog";
 
 
 export default function Home() {
@@ -22,7 +24,8 @@ export default function Home() {
         <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet" />
       </Head>
       <div className="main">
-       <Logo />
+        <Box sx={{ textAlign: "center" }}><Logo /></Box>
+        <HelpDialog />
         <div className="content">
           <Stack spacing={3} direction="column" className="mt-5">
             <Link href="/registration"
@@ -32,10 +35,6 @@ export default function Home() {
             <Link href="/live-score"
             >
               <Button variant="contained" className="w-100"><strong>Live Score</strong></Button>
-            </Link>
-            <Link href="/rules"
-            >
-              <Button variant="contained" className="w-100"><strong>Rules</strong></Button>
             </Link>
           </Stack>
         </div>

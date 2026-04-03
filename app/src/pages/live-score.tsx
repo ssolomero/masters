@@ -1,6 +1,5 @@
-import Head from "next/head";
 import Image from "next/image";
-import loadingLogo from "../../public/bulge-bl-or-loading.gif"
+import loadingLogo from "../../public/Bulge-loading.gif";
 import { useEffect, useState } from "react";
 import Accordion from "react-bootstrap/Accordion";
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
@@ -50,7 +49,7 @@ export default function Home() {
       }
     };
     fetchData();
-  }, []);
+  });
 
   function createMap(data: Player[]) {
     const map = new Map<string, Player>();
@@ -96,6 +95,7 @@ export default function Home() {
     else return parseInt(total) ??  0;
   }
 
+  //eslint-disable-next-line
   function getAggregateScore(player: any) {
     if (player?.status === 'cut') return (normalizeScoreTotal(player?.total) + 10);
     return normalizeScoreTotal(player?.total);
@@ -164,9 +164,9 @@ export default function Home() {
           <thead className="perfect-team-header">
           </thead>
           <tbody>
-          {Object.entries(rankings).map(([key, value], index) => {
+          {Object.entries(rankings).map(([key, value]) => {
             return (
-              <tr className="player-score">
+              <tr className="player-score" key={key}>
                 <td>{key}</td>
                 <td>{sortTiers(value)[0]}</td>
                 <td>{playerMap.get(sortTiers(value)[0])?.total ?? 0}</td>

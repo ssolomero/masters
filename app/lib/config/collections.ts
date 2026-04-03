@@ -21,7 +21,7 @@ async function init() {
 export async function getRankings() {
   try {
     if (!rankings) await init();
-    const result = await rankings.find({}).limit(20).toArray();
+    const result = await rankings.find({}).toArray();
     return {rankings: result}
   } catch (error) {
     console.error('Failed to fetch rankings:', error);
@@ -32,7 +32,7 @@ export async function getRankings() {
 export async function getTeams() {
   try {
     if (!teams) await init();
-    const result = await teams.find({}).limit(20).toArray();
+    const result = await teams.find({}).toArray();
     return {teams: result}
   } catch (error) {
     console.log('Failed to fetch teams:', error);

@@ -1,6 +1,3 @@
-import Image from "next/image";
-import logo from "../../public/Bulge.svg";
-import Link from "next/link";
 import Logo from "@/components/logo";
 
 export default function Rules() {

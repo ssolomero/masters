@@ -1,5 +1,3 @@
-import logo from "../../public/Bulge.svg";
-import Image from "next/image";
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -41,7 +39,7 @@ export default function Registration() {
     fetchRankings();
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       setRegisterLoading(true);
@@ -90,6 +88,7 @@ export default function Registration() {
   };
 
   const handleRandomSelection = () => {
+     // eslint-disable-next-line
     const randomTeam = Object.entries(rankings).map(([_, value]) => {
       if (Array.isArray(value) && value.length > 0) {
         const randomIndex = Math.floor(Math.random() * value.length);
@@ -106,11 +105,11 @@ export default function Registration() {
       <Box sx={{ textAlign: "center" }}><Logo /></Box>
       <HelpDialog />
       {/* Form */}
-      <form className="content mt-5 pb-5">
+      <form className="content mt-5 pb-5" onSubmit={handleSubmit}>
       {currentStep === 0 && (
         <div>
           <input type="text" value={owner} placeholder="Enter your name" className="w-100 mb-5 text-center" onChange={(e) => setOwner(e.target.value)} required/>
-          <Button variant="contained" onClick={handleNext} className="btn-primary w-100" disabled={!owner}><strong>CONTINUE</strong></Button>
+          <Button type="button" variant="contained" onClick={handleNext} className="btn-primary w-100" disabled={!owner}><strong>CONTINUE</strong></Button>
         </div>
       )}
 
@@ -121,8 +120,9 @@ export default function Registration() {
         <div>
           <div className="mb-3 text-center registration-text">Select your players below (1 per tier)</div>
           <Button 
+            type="button"
             variant="outlined"
-            className="w-100 mb-3"
+            className="w-100 mb-4"
             onClick={handleRandomSelection}
           >
           🎲 Pick for me
@@ -146,17 +146,17 @@ export default function Registration() {
         ))}
           <Box className="my-5 text-center">
             <Button
+              type="submit"
               fullWidth 
               variant="contained"
               className="w-100 mb-4"
-              onClick={handleSubmit}
               loading={registerLoading}
               loadingPosition="end"
               disabled={team.includes('N/A')}
             >
                 <strong>Register</strong>
             </Button>
-            <Button variant="text" onClick={handlePrevious}>Change name</Button>
+            <Button type="button" variant="text" onClick={handlePrevious}>Change name</Button>
           </Box>
         </div>
       )}
@@ -165,17 +165,17 @@ export default function Registration() {
         <>
           <Alert severity="success" sx={{ backgroundColor: "primary", mb: 3 }}>
             <AlertTitle>Success</AlertTitle>
-            Welcome to the Bulge Open!
+            Welcome to the 2nd Annual Bulge Open!
           </Alert>
           <Typography fontWeight="bold" className="mb-2">Next Steps:</Typography>
           <Typography variant="body1" textAlign="left" className="mb-3">
-            💸  Venmo $15 to @sharence-solomero
+            💸  Venmo <strong>$15</strong> to <a href="https://venmo.com/sharence-solomero" target="_blank" rel="noopener noreferrer">@sharence-solomero</a>
           </Typography>
           <Typography variant="body1" textAlign="left" className="mb-3">
-            ⛳️  Check back here to get live updates
+            ⛳️  See your team&apos;s <Link href="/live-scores">LIVE SCORES</Link>
           </Typography>
           <Typography variant="body1" textAlign="left" className="mb-3">
-            👕  Buy exclusive Bulge
+            🚨  Check back here at bulgeopen.com frequently for any updates
           </Typography>
         </>
       )}

@@ -1,8 +1,6 @@
 import { Html, Head, Main, NextScript } from "next/document";
 import Footer from "../components/footer";
 import Box from "@mui/material/Box";
-import Logo from "../components/logo";
-import HelpDialog from "../components/help-dialog";
 
 
 export default function Document() {

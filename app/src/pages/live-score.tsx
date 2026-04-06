@@ -49,7 +49,7 @@ export default function Home() {
       }
     };
     fetchData();
-  });
+  }, []);
 
   function createMap(data: Player[]) {
     const map = new Map<string, Player>();

@@ -49,8 +49,7 @@ const HelpDialog = () => {
           <strong>🏌️ Build Your Team</strong>
           <ul>
             <li>Select <strong>7 players</strong> (1 player from each tier)</li>
-            <li><strong>Tier 1</strong> = best odds to win</li>
-            <li><strong>Tier 7</strong> = worst odds to win</li>
+            <li><strong>Tier 1</strong> = best odds to win (via Draftkings Sportsbook)</li>
           </ul>
 
           <strong>📊 Scoring</strong>
@@ -66,9 +65,9 @@ const HelpDialog = () => {
 
           <strong>💰 Earnings</strong>
           <ul>
-            <li>1st: ~70% of pool</li>
-            <li>2nd: ~20% of pool</li>
-            <li>3rd: ~10% of pool</li>
+            <li>Buy-In: Venmo <strong>$15</strong> to <strong>@sharence-solomero</strong></li>
+            <li><strong>3rd place</strong> will receive their money back</li>
+            <li><strong>1st & 2nd place</strong> will  split the rest of the pool ~80/~20 respectively</li>
           </ul>
         </DialogContent>
 

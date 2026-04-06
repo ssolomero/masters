@@ -24,6 +24,12 @@ export default function Registration() {
   const [playersLoading, setPlayersLoading] = useState(true);
 
   useEffect(() => {
+    const registrationComplete = sessionStorage.getItem("registrationComplete");
+    if (registrationComplete === "true") {
+      setCurrentStep(2);
+      sessionStorage.removeItem("registrationComplete");
+    }
+
     const fetchRankings = async () => {
       try {
         const response = await fetch('/api/rankings');
@@ -60,6 +66,7 @@ export default function Registration() {
 
       if (response.ok) {
         console.log('Post created successfully!');
+        sessionStorage.setItem("registrationComplete", "true");
         setCurrentStep(2); // Move to confirmation step
       } else {
         console.log(`Error: ${data.message || 'Something went wrong'}`);
@@ -172,10 +179,10 @@ export default function Registration() {
             💸  Venmo <strong>$15</strong> to <a href="https://venmo.com/sharence-solomero" target="_blank" rel="noopener noreferrer">@sharence-solomero</a>
           </Typography>
           <Typography variant="body1" textAlign="left" className="mb-3">
-            ⛳️  See your team&apos;s <Link href="/live-scores">LIVE SCORES</Link>
+            ⛳️  See your team&apos;s <Link href="/live-score">LIVE SCORE</Link>
           </Typography>
           <Typography variant="body1" textAlign="left" className="mb-3">
-            🚨  Check back here at bulgeopen.com frequently for any updates
+            🚨  Join the <a href="https://discord.gg/wxgbhXrs" target="_blank" rel="noopener noreferrer">Discord</a> for updates
           </Typography>
         </>
       )}

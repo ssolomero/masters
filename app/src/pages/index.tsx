@@ -29,7 +29,11 @@ export default function Home() {
                   <Box sx={{ textAlign: "center" }}><Logo /></Box>
         <Alert severity="info" className="mt-3">
           <Typography variant="body2" fontWeight="bold">Registration will close April 8 11:59 PM CT</Typography>
-          <Typography variant="body2" className="mt-2">The Masters takes place on <br />Thu, Apr 9, 2026 – Sun, Apr 12, 2026</Typography>
+          <Typography variant="body2" className="mt-1">The Masters takes place on Thu, Apr 9, 2026 – Sun, Apr 12, 2026</Typography>
+        </Alert>
+        <Alert severity="info" className="mt-3">
+          <Typography variant="body2" fontWeight="bold">Join the <a href="https://discord.gg/wxgbhXrs" target="_blank" rel="noopener noreferrer">Discord</a> for any updates</Typography>
+          <Typography variant="body2" className="mt-1">For additional info, click the help icon in the top right corner</Typography>
         </Alert>
           <Stack spacing={3} direction="column" className="mt-5">
             <Link href="/registration"

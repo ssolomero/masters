@@ -12,7 +12,7 @@ import HelpDialog from "../components/help-dialog";
 
 export default function Home() {
 
-  const scoresUrl = 'https://live-golf-data.p.rapidapi.com/leaderboard?orgId=1&tournId=014&year=2025';
+  const scoresUrl = 'https://live-golf-data.p.rapidapi.com/leaderboard?orgId=1&tournId=014&year=2026';
   const scoresOptions = {
 	  method: 'GET',
 	  headers: {

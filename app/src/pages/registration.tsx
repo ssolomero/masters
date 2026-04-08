@@ -95,11 +95,12 @@ export default function Registration() {
   };
 
   const handleRandomSelection = () => {
-     // eslint-disable-next-line
-    const randomTeam = Object.entries(rankings).map(([_, value]) => {
-      if (Array.isArray(value) && value.length > 0) {
-        const randomIndex = Math.floor(Math.random() * value.length);
-        return value[randomIndex];
+    const tiers = ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
+    const randomTeam = tiers.map((tier) => {
+      const tierPlayers = rankings[tier as keyof Rankings];
+      if (Array.isArray(tierPlayers) && tierPlayers.length > 0) {
+        const randomIndex = Math.floor(Math.random() * tierPlayers.length);
+        return tierPlayers[randomIndex];
       }
       return 'N/A';
     });

@@ -29,7 +29,7 @@ export default function Home() {
                   <Box sx={{ textAlign: "center" }}><Logo /></Box>
         <Alert severity="info" className="mt-3">
           <Typography variant="body2" fontWeight="bold"><a href="https://www.masters.com" target="_blank" rel="noopener noreferrer">Watch the Masters</a></Typography>
-          <Typography variant="body2" className="mt-1">Click the Live Score button below to view your team's latest score</Typography>
+          <Typography variant="body2" className="mt-1">Click the Live Score button below to view your team&apos;s latest score</Typography>
         </Alert>
         <Alert severity="info" className="mt-3">
           <Typography variant="body2" fontWeight="bold">Join the <a href="https://discord.gg/wxgbhXrs" target="_blank" rel="noopener noreferrer">Discord</a> for insights and recaps</Typography>

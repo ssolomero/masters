@@ -9,6 +9,7 @@ import Badge from '@mui/material/Badge';
 import Box from "@mui/material/Box";
 import HelpDialog from "../components/help-dialog";
 
+type LivePlayer = Player & { status?: string };
 
 export default function Home() {
 
@@ -22,7 +23,7 @@ export default function Home() {
   };
 
   const [loading, setLoading] = useState(true);
-  const [playerMap, setPlayerMap] = useState(new Map());
+  const [playerMap, setPlayerMap] = useState(new Map<string, LivePlayer>());
   const [teams, setTeams] = useState({} as Teams[]);
   const [rankings, setRankings] = useState(null as unknown as Rankings);
 
@@ -51,8 +52,8 @@ export default function Home() {
     fetchData();
   }, []);
 
-  function createMap(data: Player[]) {
-    const map = new Map<string, Player>();
+  function createMap(data: LivePlayer[]) {
+    const map = new Map<string, LivePlayer>();
     data.forEach((element) => {
       map.set(`${element.firstName} ${element.lastName}`, element)
     });
@@ -83,26 +84,30 @@ export default function Home() {
   }
 
   function sortTiers(data: string[]) {
-    return data.sort((a,  b) => normalizeScoreTotal(playerMap.get(a)?.total) - normalizeScoreTotal(playerMap.get(b)?.total));
+    return [...data].sort((a,  b) => normalizeScoreTotal(playerMap.get(a)?.total) - normalizeScoreTotal(playerMap.get(b)?.total));
   }
  
   function sortPool(data: Teams[]) {
-    return data.sort((a, b) => totalScore(a.players) - totalScore(b.players))
+    return [...data].sort((a, b) => {
+      const teamAScore = totalScore(sortTeamPlayers(a.players));
+      const teamBScore = totalScore(sortTeamPlayers(b.players));
+      return teamAScore - teamBScore;
+    });
   }
 
-  function normalizeScoreTotal(total: string) {
-    if (total === 'E') return 0;
-    else return parseInt(total) ??  0;
+  function normalizeScoreTotal(total?: string) {
+    if (!total || total === 'E') return 0;
+    const parsed = Number.parseInt(total, 10);
+    return Number.isNaN(parsed) ? 0 : parsed;
   }
 
-  //eslint-disable-next-line
-  function getAggregateScore(player: any) {
+  function getAggregateScore(player?: LivePlayer) {
     if (player?.status === 'cut') return (normalizeScoreTotal(player?.total) + 10);
     return normalizeScoreTotal(player?.total);
   }
 
   function sortTeamPlayers(teamObject: {tier: string, name: string}[]) {
-    return teamObject.sort((a, b) => getAggregateScore(playerMap.get(a.name)) - getAggregateScore(playerMap.get(b.name)));
+    return [...teamObject].sort((a, b) => getAggregateScore(playerMap.get(a.name)) - getAggregateScore(playerMap.get(b.name)));
   }
 
   function createTeamsObject(teams: TeamsResponse[]) {
@@ -110,7 +115,6 @@ export default function Home() {
       owner: team.owner,
       players: team.players.map((player: string, idx: number) => ({ tier: `T${idx + 1}`, name: player }))
     }));
-    console.log(teamsMap);
     return teamsMap;
   }
 
@@ -178,15 +182,16 @@ export default function Home() {
         </Accordion.Body>
         </Accordion.Item>
         {sortPool(teams).map((team, index) => {
+          const sortedPlayers = sortTeamPlayers(team.players);
           return (
             <Accordion.Item eventKey={index + 1 + ""} key={index}
             >
               <Accordion.Header>
-                <div className="total-score">{totalScore(sortTeamPlayers(team.players))}</div>
+                <div className="total-score">{totalScore(sortedPlayers)}</div>
                 <div>{team.owner}</div>
               </Accordion.Header>
               <Accordion.Body>
-                {sortTeamPlayers(team.players).map((player, index) => {
+                {sortedPlayers.map((player, index) => {
                   const playerData = playerMap.get(player.name);
                   return (
                     <table className="scoreboard" key={player.name}>

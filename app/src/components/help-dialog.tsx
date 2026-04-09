@@ -63,11 +63,11 @@ const HelpDialog = () => {
             </li>
           </ul>
 
-          <strong>💰 Earnings</strong>
+          <strong>💰 Earnings (Total Pool: $210)</strong>
           <ul>
-            <li>Buy-In: Venmo <strong>$15</strong> to <strong>@sharence-solomero</strong></li>
-            <li><strong>3rd place</strong> will receive their money back</li>
-            <li><strong>1st & 2nd place</strong> will  split the rest of the pool ~80/~20 respectively</li>
+            <li><strong>1st place</strong> -- $155</li>
+            <li><strong>2nd place</strong> -- $40</li>
+            <li><strong>3rd place</strong> -- $15</li>
           </ul>
         </DialogContent>
 
